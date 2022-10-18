@@ -107,6 +107,13 @@ func (id trackingMessageID) ack() bool {
 	return true
 }
 
+func (id trackingMessageID) NackByMsgLater(msg Message, delay time.Duration) {
+	if id.consumer == nil {
+		return
+	}
+	id.consumer.NackMsgLater(msg, delay)
+}
+
 func (id messageID) isEntryIDValid() bool {
 	return id.entryID >= 0
 }
